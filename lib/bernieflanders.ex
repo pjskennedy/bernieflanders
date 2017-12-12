@@ -7,13 +7,8 @@ defmodule Bernieflanders do
     :ok = ExTwitter.configure(Application.get_env(:extwitter, :oauth))
     handles = Application.get_env(:bernieflanders, :handles)
 
-    children = [
-      worker(Bernieflanders.Server, [handles])
-    ]
-
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Bernieflanders.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link([
+      {Bernieflanders.Server, [handles]}
+    ], strategy: :one_for_one)
   end
 end
