@@ -1,5 +1,3 @@
-require IEx;
-
 defmodule Bernieflanders.Server do
   use GenServer
 

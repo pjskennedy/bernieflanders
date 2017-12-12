@@ -1,5 +1,3 @@
-require IEx;
-
 defmodule Bernieflanders.Twitterstream do
   def stream(handles) do
     IO.puts "Starting Twitter Stream"

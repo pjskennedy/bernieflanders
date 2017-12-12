@@ -2,7 +2,6 @@ defmodule Bernieflanders do
   use Application
 
   def start(_type, _args) do
-    IO.puts "HELLO"
     import Supervisor.Spec, warn: false
 
     :ok = ExTwitter.configure(Application.get_env(:extwitter, :oauth))
