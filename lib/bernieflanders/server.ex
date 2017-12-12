@@ -1,16 +1,16 @@
 defmodule Bernieflanders.Server do
-  use GenServer
-
-  def start_link(list) do
-    GenServer.start_link(__MODULE__, list, name: __MODULE__)
+  def start_link(handles) do
+    pid = spawn_link(Bernieflanders.Twitterstream, :stream, handles)
+    {:ok, pid}
   end
 
-  def start_link do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
-  end
-
-  def init(handles) do
-    spawn_link(fn -> Bernieflanders.Twitterstream.stream(handles) end)
-    {:ok, handles}
+  def child_spec(opts) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [opts]},
+      type: :worker,
+      restart: :permanent,
+      shutdown: 500
+    }
   end
 end
